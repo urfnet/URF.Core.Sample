@@ -1,6 +1,8 @@
 ## In-Development - Alpha ETA: 02/01/2018
 ## URF.Core.Sample
 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
 ### VSCode Workspace (Solution) Structure
 
 * Northwind.Data
@@ -10,6 +12,8 @@
 * Northwind.Api
 * Northwind.Web
 * Northwind.Test
+
+![URF.Core Sample Solution](https://raw.githubusercontent.com/urfnet/URF.Core.Sample/master/vscode.png "URF.Core Sample Solution")
 
 ### TechStack
 
