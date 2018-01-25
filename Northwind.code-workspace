@@ -1,11 +1,17 @@
 {
-	"folders": [
-		{
-			"path": "Northwind.Api"
-		},
-		{
-			"path": "Northwind.Web"
-		}
-	],
+  "folders": [
+    {
+      "path": "Northwind.Data"
+    },
+    {
+      "path": "Northwind.Entity"
+    },
+    {
+      "path": "Northwind.Api"
+    },
+    {
+      "path": "Northwind.Web"
+    }
+  ],
   "settings": {}
 }
