@@ -1,8 +1,6 @@
 ## In-Development - Alpha ETA: 02/01/2018
 ## URF.Core.Sample
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
 ### VSCode Workspace (Solution) Structure
 
 * Northwind.Data
