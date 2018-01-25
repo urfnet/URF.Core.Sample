@@ -1,14 +1,14 @@
 ## In-Development - Alpha ETA: 02/01/2018
-## URF.Core.
+## URF.Core.Sample
 
-## VSCode Workspace Solution Structure
+### VSCode Workspace (Solution) Structure
 
 * Northwind.Data
 * Northwind.Entity
 * Northwind.Api
 * Northwind.Web
 
-## TechStack
+### TechStack
 
 * URF.Core
 * Trackable.Entities.Core
