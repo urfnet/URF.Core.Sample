@@ -11,10 +11,11 @@
 ## TechStack
 
 * URF.Core
+* Trackable.Entities.Core
 * .NET Core
 * NET Standard
 * EF Core
 * ASP.NET Core API
 * ASP.NET Core OData
 * Angular
-* Kendo UI
+* Kendo UI for Angular
