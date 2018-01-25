@@ -5,8 +5,11 @@
 
 * Northwind.Data
 * Northwind.Entity
+* Northwind.Repository
+* Northwind.Service
 * Northwind.Api
 * Northwind.Web
+* Northwind.Test
 
 ### TechStack
 
