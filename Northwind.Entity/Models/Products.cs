@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using URF.Core.EF.Trackable;
 
 namespace Northwind.Data.Models
 {
-    public partial class Products
+    public partial class Products: Entity
     {
         public Products()
         {

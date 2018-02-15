@@ -6,6 +6,10 @@ namespace Northwind.Data.Models
 {
     public partial class NorthwindContext : DbContext
     {
+        public NorthwindContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
         public virtual DbSet<CustomerDemographics> CustomerDemographics { get; set; }
@@ -25,7 +29,6 @@ namespace Northwind.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Server=.;Database=Northwind;Trusted_Connection=True;");
             }
         }

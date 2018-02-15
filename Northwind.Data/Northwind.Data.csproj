@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RuntimeFrameworkVersion>2.0.3</RuntimeFrameworkVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +14,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="URF.Core.EF.Trackable">
+      <HintPath>..\..\..\..\Users\lelong37\.nuget\packages\urf.core.ef.trackable\1.0.0-beta\lib\netstandard2.0\URF.Core.EF.Trackable.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
