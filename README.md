@@ -1,5 +1,10 @@
-# URF.Core.Sample
-Sample Application with URF.Core (Unit of Work and Repository Framework for .NET Core, NET Standard & EntityFramework Core)
+# URF.Core.Sample #
+**_<sup>URF.Core Sample Application | Unit-of-Work & Repository Framework | Official URF Team & [Trackable Entities](https://github.com/TrackableEntities) Team</sup>_**
+
+[![Build Status](https://travis-ci.org/urfnet/URF.Core.svg?branch=master)](https://travis-ci.org/urfnet/URF.Core)
+### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) ###
+
+Unit of Work and Repository Framework for .NET Core, NET Standard & EntityFramework Core
 
 ## URF sample and usage in ASP.NET Core Web API & OData
 ```csharp
