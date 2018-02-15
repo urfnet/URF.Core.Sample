@@ -1,26 +1,205 @@
-## In-Development - Alpha ETA: 02/01/2018
-## URF.Core.Sample
+# URF.Core.Sample
+Sample Application with URF.Core (Unit of Work and Repository Framework for .NET Core, NET Standard & EntityFramework Core)
 
-### VSCode Workspace (Solution) Structure
+## URF sample and usage in ASP.NET Core Web API & OData
+```csharp
+public class ProductsController : ODataController
+{
+    private readonly IProductService _productService;
+    private readonly IUnitOfWork _unitOfWork;
 
-* Northwind.Data
-* Northwind.Entity
-* Northwind.Repository
-* Northwind.Service
-* Northwind.Api
-* Northwind.Web
-* Northwind.Test
+    public ProductsController(
+        IProductService productService,
+        IUnitOfWork unitOfWork)
+    {
+        _productService = productService;
+        _unitOfWork = unitOfWork;
+    }
 
-![URF.Core Sample Solution](https://raw.githubusercontent.com/urfnet/URF.Core.Sample/master/vscode.png "URF.Core Sample Solution")
+    [EnableQuery]
+    public IQueryable<Products> Get()
+    {
+        return _productService.Queryable();
+    }
 
-### TechStack
+    public async Task<IActionResult> Get([FromODataUri] int key)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-* URF.Core
-* Trackable.Entities.Core
-* .NET Core
-* NET Standard
-* EF Core
-* ASP.NET Core API
-* ASP.NET Core OData
-* Angular
-* Kendo UI for Angular
+        var products = await _productService.Queryable().SingleOrDefaultAsync(m => m.ProductId == key);
+
+        if (products == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(products);
+    }
+
+    public async Task<IActionResult> Put(int key, [FromBody] Products products)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        if (key != products.ProductId)
+        {
+            return BadRequest();
+        }
+
+        products.TrackingState = TrackingState.Modified;
+
+        try
+        {
+            await _unitOfWork.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!ProductsExists(key))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
+    }
+
+    public async Task<IActionResult> Post(Products products)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        _productService.Insert(products);
+        await _unitOfWork.SaveChangesAsync();
+
+        return Created(products);
+    }
+
+    public async Task<IActionResult> Delete(int key)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var products = await _productService.Queryable().SingleOrDefaultAsync(m => m.ProductId == key);
+
+        if (products == null)
+        {
+            return NotFound();
+        }
+
+        _productService.Delete(products);
+        await _unitOfWork.SaveChangesAsync();
+
+        return StatusCode((int) HttpStatusCode.NoContent);
+    }
+
+    private bool ProductsExists(int id)
+    {
+        return _productService.Queryable().Any(e => e.ProductId == id);
+    }
+}
+```
+
+## URF sample and usage in ASP.NET Core Web API & OData
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc()
+        .AddJsonOptions(options =>
+            options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
+
+    services.AddOData();
+
+    var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
+    services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
+    services.AddScoped<DbContext, NorthwindContext>();
+    services.AddTransient<IUnitOfWork, UnitOfWork>();
+    services.AddTransient<ITrackableRepository<Products>, TrackableRepository<Products>>();
+    services.AddTransient<IProductService, ProductService>();
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    if (env.IsDevelopment())
+        app.UseDeveloperExceptionPage();
+
+    var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
+    var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));        
+    entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
+    entitySetConfiguration.EntityType.Ignore(x => x.Category);
+    entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
+    entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+
+    app.UseMvc(routeBuilder =>
+        {
+            routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(1000).Count();
+            routeBuilder.MapODataServiceRoute("ODataRoute", "odata", oDataConventionModelBuilder.GetEdmModel()); 
+            routeBuilder.EnableDependencyInjection();
+        }
+    );
+}
+```
+## Implementing Domain Logic with URF Service Pattern
+```csharp
+public class CustomerService : Service<Customer>, ICustomerService
+{
+    private readonly ITrackableRepository<Order> _ordeRepository;
+
+    public CustomerService(
+        ITrackableRepository<Customer> customerRepository,
+        ITrackableRepository<Order> ordeRepository) : base(customerRepository)
+    {
+        _ordeRepository = ordeRepository;
+    }
+
+    public async Task<IEnumerable<Customer>> CustomersByCompany(string companyName)
+    {
+        return await Repository
+            .Queryable()
+            .Where(x => x.CompanyName.Contains(companyName))
+            .ToListAsync();
+    }
+
+    public async Task<decimal> CustomerOrderTotalByYear(string customerId, int year)
+    {
+        return await Repository
+            .Queryable()
+            .Where(c => c.CustomerId == customerId)
+            .SelectMany(c => c.Orders.Where(o => o.OrderDate != null && o.OrderDate.Value.Year == year))
+            .SelectMany(c => c.OrderDetails)
+            .Select(c => c.Quantity * c.UnitPrice)
+            .SumAsync();
+    }
+
+    public async Task<IEnumerable<CustomerOrder>> GetCustomerOrder(string country)
+    {
+        var customers = Repository.Queryable();
+        var orders = _ordeRepository.Queryable();
+
+        var query = from c in customers
+            join o in orders on new { a = c.CustomerId, b = c.Country }
+                equals new { a = o.CustomerId, b = country }
+            select new CustomerOrder
+            {
+                CustomerId = c.CustomerId,
+                ContactName = c.ContactName,
+                OrderId = o.OrderId,
+                OrderDate = o.OrderDate
+            };
+
+        return await query.ToListAsync();
+    }
+}
+```
