@@ -1,0 +1,98 @@
+@include exports("dialog/layout") {
+
+    .k-dialog-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10001;
+
+        .k-dialog {
+            position: relative;
+        }
+    }
+
+    .k-dialog {
+        padding: 0;
+        min-width: 450px;
+        position: fixed;
+
+        // Centered
+        &.k-dialog-centered {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+    }
+
+
+    // Titlebar
+    .k-dialog-titlebar {}
+    .k-dialog-title {}
+
+
+    // Actions
+    .k-dialog-actions {}
+    .k-dialog-action {}
+
+
+    // Content
+    .k-dialog-content {}
+
+
+    // Buttons
+    .k-dialog-buttongroup {
+        border-width: 1px 0 0;
+        border-style: solid;
+        border-color: inherit;
+        background-color: transparent;
+        display: flex;
+        flex: 0 0 auto;
+
+        .k-button {
+            // sass-lint:disable no-important
+            padding: ($window-inner-padding-x * .75) $window-inner-padding-x;
+            width: auto !important;
+            border-width: 0;
+            border-color: inherit;
+            background: none;
+            white-space: normal;
+            flex: 1;
+            // sass-lint:enable no-important
+
+            &::before,
+            &::after {
+                // center stretched button content for Safari 10
+                content: '';
+                flex: 1 0 auto;
+            }
+        }
+        .k-button,
+        .k-button:first-child,
+        .k-button:last-child,
+        .k-group-start,
+        .k-group-end {
+            @include border-radius( 0 );
+        }
+        .k-button + .k-button {
+            margin: 0;
+            border-left-width: 1px;
+
+            .k-rtl &,
+            [dir='rtl'] & {
+                border-left-width: 0;
+                border-right-width: 1px;
+            }
+        }
+    }
+    .k-dialog-button-layout-stretched {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+}

@@ -1,0 +1,116 @@
+@include exports("treeview/layout") {
+
+    $treeview-indent: 16px;
+
+    // Base
+    .k-treeview {
+        border-width: 0;
+        background: none;
+        line-height: $form-line-height;
+        cursor: default;
+        overflow: auto;
+        white-space: nowrap;
+
+        .k-content,
+        > .k-group,
+        .k-item > .k-group {
+            margin: 0;
+            padding: 0;
+            background: none;
+            list-style: none;
+            position: relative;
+
+            &.ng-animating {
+                overflow: hidden;
+            }
+        }
+
+        // Wrappers
+        .k-top,
+        .k-mid,
+        .k-bot {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            align-content: center;
+        }
+
+        // Items
+        .k-item {
+            outline-style: none;
+            margin: 0;
+            padding: 0 0 0 $treeview-indent;
+            border-width: 0;
+            display: block;
+        }
+
+        // Link
+        .k-in {
+            @include border-radius();
+            margin: 0;
+            padding: $button-padding-y $button-padding-x;
+            border: 1px solid transparent;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            align-content: center;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        // Expand / collapse
+        .k-i-expand,
+        .k-i-collapse {
+            margin-left: -$treeview-indent;
+            cursor: pointer;
+        }
+
+        // Other content
+        .k-checkbox-wrapper {
+            margin-right: $icon-spacing;
+        }
+        .k-in .k-icon,
+        .k-in .k-image,
+        .k-in .k-sprite {
+            margin-right: $icon-spacing;
+        }
+        .k-checkbox-label {
+            padding-left: $icon-size;
+        }
+
+    }
+
+
+
+
+    // RTL
+    .k-rtl .k-treeview {
+
+        // Items
+        .k-item {
+            padding-left: 0;
+            padding-right: $treeview-indent;
+        }
+
+        // Expand / collapse
+        .k-i-expand,
+        .k-i-collapse {
+            margin-left: 0;
+            margin-right: -$treeview-indent;
+        }
+
+        // Other content
+        .k-checkbox-wrapper {
+            margin-left: $icon-spacing;
+            margin-right: 0;
+        }
+        .k-in .k-icon,
+        .k-in .k-image,
+        .k-in .k-sprite {
+            margin-left: $icon-spacing;
+            margin-right: 0;
+        }
+
+    }
+
+}

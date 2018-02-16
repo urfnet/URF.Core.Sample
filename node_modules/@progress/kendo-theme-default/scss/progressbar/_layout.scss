@@ -1,0 +1,171 @@
+@include exports('progressbar/layout') {
+
+    // Base
+    .k-progressbar {
+        @include border-radius();
+        border-width: 0;
+        font-size: $font-size-sm;
+        line-height: $progressbar-height;
+        display: inline-flex;
+        vertical-align: middle;
+        position: relative;
+        overflow: hidden;
+
+
+        // Status
+        .k-progress-status-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .k-progress-status {
+            padding: 0 ($spacer-x / 2);
+            min-width: 10px;
+            text-align: center;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        > .k-state-selected {
+            position: absolute;
+            overflow: hidden;
+            border-style: solid;
+            border-width: 0;
+
+            .k-progress-status-wrap {}
+        }
+
+
+        // Chunks
+        > ul {
+            border-width: inherit;
+            border-style: inherit;
+            white-space: nowrap;
+            display: flex;
+            align-items: stretch;
+            flex: 1;
+        }
+        .k-item {
+            display: block;
+            border-width: 0;
+            border-style: solid;
+            border-color: transparent;
+        }
+
+    }
+
+
+    // Horizontal
+    .k-progressbar-horizontal {
+        width: 27em;
+        height: $progressbar-height;
+        flex-direction: row;
+
+
+        .k-progress-status-wrap {
+            flex-direction: row;
+            justify-content: flex-end;
+            top: 0;
+            left: 0;
+        }
+        > .k-state-selected {
+            left: 0;
+            right: auto;
+            top: 0;
+            height: 100%;
+        }
+
+
+        // Chunks
+        > ul {
+            flex-direction: row;
+        }
+        .k-item {}
+        .k-item + .k-item {
+            border-left-width: 1px;
+        }
+
+
+        // Horizontal reverse
+        &.k-progressbar-reverse {
+            flex-direction: row-reverse;
+
+            .k-progress-status-wrap {
+                justify-content: flex-start;
+                left: auto;
+                right: 0;
+            }
+            > .k-state-selected {
+                left: auto;
+                right: 0;
+            }
+
+        }
+    }
+
+
+    // Vertical
+    .k-progressbar-vertical {
+        width: $progressbar-height;
+        height: 27em;
+        flex-direction: column;
+        justify-content: flex-end;
+
+
+        .k-progress-status-wrap {
+            flex-direction: column;
+            justify-content: flex-start;
+            left: 0;
+            bottom: 0;
+        }
+        .k-progress-status {
+            transform: rotate(-90deg) translateX(-100%);
+            transform-origin: 0 0;
+        }
+        > .k-state-selected {
+            left: -1px;
+            bottom: -1px;
+            width: 100%;
+        }
+
+
+        // Chunk
+        > ul {
+            flex-direction: column;
+        }
+        .k-item {}
+        .k-item + .k-item {
+            border-top-width: 1px;
+        }
+
+
+        // Vertical reverse
+        &.k-progressbar-reverse {
+            flex-direction: column-reverse;
+
+            .k-progress-status-wrap {
+                justify-content: flex-end;
+                top: 0;
+                bottom: auto;
+            }
+            .k-progress-status {
+                transform: rotate(90deg) translateX(-100%);
+                transform-origin: 0 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+            > .k-state-selected {
+                left: auto;
+                right: 0;
+                bottom: auto;
+                top: 0;
+            }
+
+        }
+    }
+
+}

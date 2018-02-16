@@ -1,0 +1,210 @@
+@include exports("datetime/theme") {
+    $time-list-highlight-color: $border-color !default;
+    $time-list-focused-bg: rgba(0, 0, 0, .04);
+    $time-list-title-focus: #000 !default;
+
+    // Shared
+    .k-datepicker,
+    .k-timepicker,
+    .k-datetimepicker {
+
+        // Normal state
+        .k-picker-wrap {
+            @include appearance( input );
+            background-clip: padding-box;
+
+            .k-ie11 &,
+            .k-edge12 &,
+            .k-edge13 & {
+                background-clip: border-box;
+            }
+        }
+
+        .k-select {
+            @include appearance( button );
+            padding: 0;
+            width: button-inner-size();
+            border-width: 0;
+        }
+
+        // Hovered state
+        &:hover,
+        .k-state-hover {
+            @include appearance( hovered-input );
+
+            .k-select {
+                @include appearance( hovered-button );
+                border-color: inherit;
+            }
+        }
+
+        // Selected state
+        .k-state-focused,
+        .k-state-active {
+            @include appearance( focused-input );
+
+            .k-select {
+                @include appearance( active-button );
+                border-color: inherit;
+            }
+        }
+    }
+
+    // Datepicker
+    .k-datepicker,
+    .k-datetimepicker,
+    .k-timepicker {
+        .k-picker-wrap.k-state-invalid {
+            transition: none;
+            border-color: $error;
+
+            .k-input {
+                color: $error;
+            }
+        }
+
+        .k-i-warning {
+            color: $error;
+        }
+    }
+
+    // Timepicker
+    .k-timepicker {}
+
+
+    // Timepicker header
+    .k-time-header {
+        .k-title {
+            font-weight: bold;
+        }
+
+        .k-time-now {
+            color: $accent;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+                color: $link-hover-text;
+            }
+        }
+    }
+
+    // Timepicker content
+    .k-time-list-wrapper {
+        background-color: $popup-bg;
+
+        .k-title {
+            @include appearance( header );
+            z-index: 12;
+            background: $popup-bg;
+            opacity: $disabled-opacity;
+        }
+
+        &.k-state-focused {
+            .k-title {
+                color: $time-list-title-focus;
+                opacity: 1;
+            }
+
+            &::before,
+            &::after {
+                background-color: $time-list-focused-bg;
+                border-width: 0;
+            }
+        }
+    }
+
+    .k-time-list {
+        &::before,
+        &::after {
+            $shadow-size: 3em;
+            box-shadow: 0 0 $shadow-size ($shadow-size / 2) $popup-bg;
+        }
+
+        .k-item:hover {
+            color: $accent;
+        }
+    }
+
+    .k-time-container {
+        background: transparent;
+    }
+
+    .k-time-highlight {
+        background-color: $bg-color;
+        border-color: $time-list-highlight-color;
+    }
+
+    // Datetimepicker
+    .k-datetimepicker {
+
+        .k-select {
+            width: auto;
+        }
+        .k-link {
+            padding: 0;
+            width: button-inner-size();
+            border-width: 0;
+        }
+    }
+
+    // Dateinput
+    .k-dateinput {
+
+        // Normal state
+        .k-dateinput-wrap {
+            @include appearance( input );
+            background-clip: padding-box;
+
+            .k-ie11 &,
+            .k-edge12 &,
+            .k-edge13 & {
+                background-clip: border-box;
+            }
+        }
+        .k-select {
+            @include appearance( button );
+            padding: 0;
+            width: button-inner-size();
+            border-width: 0;
+
+            &:hover {
+                @include appearance( hovered-button );
+            }
+
+            > .k-state-selected,
+            > .k-state-active {
+                color: darken($text-color, 25%);
+                @include appearance( hovered-button );
+                box-shadow: inset $button-focused-shadow;
+            }
+        }
+
+        // Hovered state
+        .k-state-hover {
+            @include appearance( hovered-input );
+
+            .k-select { @include appearance( hovered-button ); }
+        }
+
+        // Focused state
+        .k-state-focused {
+            @include appearance( focused-input );
+
+            .k-select { @include appearance( active-button ); }
+        }
+
+        // Invalid state
+        &.k-state-invalid {
+            .k-textbox {
+                color: $error;
+                border-color: $error;
+            }
+
+            .k-i-warning {
+                color: $error;
+            }
+        }
+    }
+
+}

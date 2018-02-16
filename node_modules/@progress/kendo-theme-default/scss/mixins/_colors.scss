@@ -1,0 +1,74 @@
+@import "vendor/color-helpers/math";
+@import "vendor/color-helpers/contrast";
+
+@function color-level($color, $level: 0) {
+
+    @if ($level == 0) {
+        @return $color;
+    }
+
+    $base: if($level > 0, #ffffff, #000000);
+    $level: abs($level);
+
+    @if ( unit($level) == "%" ) {
+        @return mix( $base, $color, $level );
+    }
+
+    @return mix($base, $color, $level * $color-level-step);
+}
+
+@function tint( $color, $level: 1 ) {
+    @return color-level( $color, $level );
+}
+
+@function shade( $color, $level: 1 ) {
+    @return color-level( $color, - $level );
+}
+
+
+@function try-darken( $color, $amount, $threshold: black ) {
+    $amount: if(unitless($amount), $amount, ($amount / 1%));
+
+    $result: darken( $color, $amount );
+    $alt-result: darken( $color, ($amount - 1) );
+
+    @if ($result == $threshold) and ($alt-result == $threshold) {
+        @return lighten( $color, $amount );
+    }
+    @return $result;
+}
+
+@function try-lighten( $color, $amount, $threshold: white ) {
+    $amount: if(unitless($amount), $amount, ($amount / 1%));
+
+    $result: lighten( $color, $amount );
+    $alt-result: lighten( $color, ($amount - 1) );
+
+    @if ($result == $threshold) and ($alt-result == $threshold) {
+        @return darken( $color, $amount );
+    }
+    @return $result;
+}
+
+
+@function yiq($color) {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+
+    $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+    @return $yiq;
+}
+@function contrast-yiq($color, $dark: #000000, $light: #ffffff) {
+    $yiq: yiq($color);
+    $out: if($yiq >= 150, $dark, $light);
+    // @debug yiq;
+    @return $out;
+}
+@function contrast-wcag($color, $dark: #000000, $light: #ffffff) {
+    $luma: ch-color-luminance($color);
+    $out: if($luma < .5, $light, $dark);
+    // @debug $luma;
+    @return $out;
+}

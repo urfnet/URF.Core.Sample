@@ -1,0 +1,25 @@
+// Core
+@import "mixins/core/import-once";
+@import "mixins/core/placeholder-selectors";
+@import "mixins/core/data-uri";
+@import "mixins/core/math";
+
+
+// Utils
+@import "mixins/blend-modes";
+@import "mixins/border-radius";
+@import "mixins/box-shadow";
+@import "mixins/button-size";
+@import "mixins/colors";
+@import "mixins/decoration";
+@import "mixins/disabled";
+@import "mixins/gradients";
+@import "mixins/hide-scrollbar";
+
+
+// Appearance
+@import "mixins/appearance";
+@import "mixins/widget";
+@import "mixins/button";
+@import "mixins/input";
+@import "mixins/node";

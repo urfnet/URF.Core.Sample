@@ -1,0 +1,24 @@
+@include exports('listbox/theme') {
+    .k-listbox {
+        .k-list-scroller {
+            background-color: $widget-bg;
+            border-color: $widget-border;
+            color: $widget-text;
+            background-clip: padding-box;
+
+            .k-ie11 &,
+            .k-edge12 &,
+            .k-edge13 & {
+                background-clip: border-box;
+            }
+        }
+        .k-drop-hint {
+            border-top-color: $accent;
+        }
+    }
+
+    .k-item.k-drag-clue {
+        background-color: $list-item-selected-bg;
+        color: $list-item-selected-text;
+    }
+}

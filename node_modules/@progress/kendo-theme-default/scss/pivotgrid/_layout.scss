@@ -1,0 +1,207 @@
+@include exports('pivotgrid/layout') {
+
+    .k-pivot {
+        position: relative;
+
+        .k-grid td {
+            white-space: nowrap;
+        }
+
+        .k-grid-content {
+            flex: 1 1 auto;
+        }
+    }
+
+    .k-pivot-toolbar {
+        padding: $cell-padding-y;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+
+    .k-pivot-toolbar .k-button,
+    .k-fieldselector .k-list li.k-item {
+        @include border-radius();
+        padding: $button-padding-y $button-padding-x;
+        padding-right: add-two( ($button-padding-x * 2), ($icon-size * 2) );
+        font-size: $font-size;
+        line-height: $form-line-height;
+        text-align: left;
+        position: relative;
+        cursor: move;
+        white-space: normal;
+    }
+
+    .k-settings-measures .k-button {
+        margin-bottom: $button-padding-y-sm;
+    }
+
+    .k-settings-columns .k-button + .k-button {
+        margin-left: $cell-padding-y;
+    }
+
+    .k-field-actions {
+        position: absolute;
+        right: $button-padding-y;
+        top: $button-padding-y;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .k-pivot-layout {
+        border-spacing: 0;
+        table-layout: auto;
+    }
+
+    .k-pivot-layout > tbody,
+    .k-pivot td {
+        vertical-align: top;
+    }
+
+    .k-pivot-layout > tbody > tr > td {
+        padding: 0;
+    }
+
+    .k-pivot-rowheaders > .k-grid,
+    .k-pivot-table > .k-grid {
+        border-width: 0;
+    }
+
+    .k-pivot-rowheaders > .k-grid td:first-child,
+    .k-pivot-table .k-grid-header .k-header.k-first {
+        border-left-width: 1px;
+    }
+
+    .k-pivot-rowheaders > .k-grid td.k-first {
+        border-left-width: 0;
+    }
+
+    .k-pivot-rowheaders > .k-grid {
+        overflow: hidden;
+    }
+
+    .k-pivot-table {
+        border-left-width: 1px;
+        border-left-style: solid;
+    }
+
+    .k-pivot-table .k-grid-header-wrap > table {
+        height: 100%;
+    }
+
+    .k-pivot .k-grid-header .k-header {
+        vertical-align: top;
+    }
+
+    .k-pivot-layout .k-grid td {
+        border-bottom-width: 1px;
+    }
+
+    .k-pivot-layout .k-grid-footer > td {
+        border-top-width: 0;
+    }
+
+    .k-pivot-filter-window .k-treeview {
+        max-height: 600px;
+    }
+
+
+    // KPI icons
+    .k-i-kpi-trend-increase,
+    .k-i-kpi-trend-decrease,
+    .k-i-kpi-trend-equal {
+        color: inherit;
+    }
+
+    .k-i-kpi-status-hold {
+        color: $warning;
+    }
+
+    .k-i-kpi-status-deny {
+        color: $error;
+    }
+
+    .k-i-kpi-status-open {
+        color: $success;
+    }
+
+}
+
+
+
+
+@include exports("pivotgrid/configorator/layout") {
+
+
+    .k-fieldselector {
+
+        .k-columns {
+            display: flex;
+            align-items: stretch;
+
+            > div {
+                padding: $cell-padding-y;
+                width: 50%;
+                box-sizing: border-box;
+                border-width: 0;
+                border-style: solid;
+                float: left;
+                overflow: auto;
+            }
+            > div + div {
+                border-left-width: 1px;
+            }
+        }
+
+
+        p {
+            margin: 0 0 $padding-y-sm;
+            text-transform: uppercase;
+        }
+        p .k-icon {
+            margin: 0 $icon-spacing 0 0;
+        }
+
+
+        // Treeview
+        .k-treeview {
+            border-width: 0;
+            overflow: visible;
+        }
+
+        .k-edit-label {
+            width: 16%;
+        }
+        .k-edit-field {
+            width: 77%;
+        }
+
+        .k-edit-buttons {
+            > input,
+            > label {
+                float: left;
+                margin-top: .4em;
+            }
+        }
+
+
+        // List container
+        .k-list-container {
+            margin-bottom: $spacer;
+            padding: $padding-y-sm;
+            border-width: 1px;
+            border-style: solid;
+        }
+        .k-list {
+            padding-bottom: $spacer;
+        }
+        .k-list .k-item {
+            border-width: 1px;
+            border-style: solid;
+        }
+        .k-list .k-item + .k-item {
+            margin-top: ($spacer / 2);
+        }
+
+    }
+
+}

@@ -1,0 +1,28 @@
+@include exports("mediaplayer/theme") {
+
+    // Theme
+    .k-mediaplayer {
+        background-clip: padding-box;
+
+        .k-ie11 &,
+        .k-edge12 &,
+        .k-edge13 & {
+            background-clip: border-box;
+        }
+    }
+
+
+    // Title bar
+    // TODO: should title bar always appear the same?
+    .k-mediaplayer-titlebar {
+        color: $panel-bg;
+        background-image: linear-gradient( rgba( $panel-text, .7 ), rgba( $panel-text, 0 ) );
+        // text-shadow: 0 0 1px $panel-text;
+    }
+
+
+    .k-mediaplayer-toolbar {
+        background-color: rgba($toolbar-bg, .85);
+    }
+
+}

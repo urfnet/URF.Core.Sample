@@ -1,0 +1,224 @@
+@include exports("tabstrip/layout") {
+
+    .k-tabstrip {
+        border-width: 0;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+
+        > .k-tabstrip-items {
+            border: 0 solid transparent;
+            border-color: inherit;
+            display: flex;
+            flex-direction: row;
+            flex: 0 0 auto;
+            position: relative;
+
+            .k-item {
+                margin: 0;
+                padding: 0;
+                border: 1px solid transparent;
+                position: relative;
+            }
+
+            .k-item.k-tab-on-top {
+                z-index: 1;
+            }
+
+            .k-item .k-link {
+                padding: $nav-item-padding-y $nav-item-padding-x;
+                color: inherit;
+                cursor: pointer;
+                display: inline-flex;
+                vertical-align: middle;
+                flex: 1 1 0;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+
+                &[data-type="remove"] {
+                    padding: $nav-item-padding-y;
+                    flex: none;
+                }
+            }
+        }
+
+        > .k-content {
+            padding: $padding-y $padding-x;
+            border-width: 1px;
+            border-style: solid;
+            border-color: inherit;
+            display: none;
+            overflow: auto;
+            flex: 1 1 auto;
+
+            &.k-state-active {
+                display: block;
+            }
+        }
+
+        // Loading
+        .k-tabstrip-items .k-loading {
+            width: 20%;
+            height: 0;
+            border: 0;
+            border-top: 1px solid transparent;
+            border-color: inherit;
+            background: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width .2s linear;
+
+            &.k-complete {
+                width: 100%;
+                border-top-width: 0;
+            }
+        }
+
+        // Scrolling
+        &.k-tabstrip-scrollable {
+            position: relative;
+
+            > .k-content {
+                border-width: 1px;
+            }
+
+            > .k-tabstrip-items {
+                border-width: 0;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            > .k-tabstrip-prev {
+                position: absolute;
+                left: 0;
+            }
+
+            > .k-tabstrip-next {
+                position: absolute;
+                right: 0;
+            }
+
+            // Fixes kendo-theme-default#476
+            .k-ie11 & {
+                > .k-tabstrip-prev,
+                > .k-tabstrip-next {
+                    top: 0;
+                }
+            }
+        }
+
+    }
+
+
+    // Tabstrip variants
+    .k-tabstrip-top {
+        > .k-tabstrip-items {
+            border-bottom-width: 1px;
+
+            .k-item {
+                @include border-top-radius();
+                margin-bottom: -1px;
+            }
+
+            .k-item + .k-item {
+                margin-left: $nav-item-margin;
+            }
+
+            .k-item.k-state-active {
+                border-bottom-color: transparent;
+            }
+        }
+
+        > .k-content {
+            @include border-bottom-radius();
+            border-top-width: 0;
+        }
+    }
+    .k-tabstrip-bottom {
+        > .k-tabstrip-items {
+            border-top-width: 1px;
+
+            .k-item {
+                @include border-bottom-radius();
+                margin-top: -1px;
+            }
+
+            .k-item + .k-item {
+                margin-left: $nav-item-margin;
+            }
+
+            .k-item.k-state-active {
+                border-top-color: transparent;
+            }
+        }
+
+        > .k-content {
+            @include border-top-radius();
+            border-bottom-width: 0;
+        }
+    }
+    .k-tabstrip-left {
+        flex-direction: row;
+
+        > .k-tabstrip-items {
+            border-right-width: 1px;
+            display: inline-flex;
+            flex-direction: column;
+
+            .k-item {
+                @include border-left-radius();
+                margin-right: -1px;
+            }
+
+            .k-item + .k-item {
+                margin-top: $nav-item-margin;
+            }
+
+            .k-item.k-state-active {
+                border-right-color: transparent;
+            }
+        }
+
+        > .k-content {
+            @include border-right-radius();
+            // sass-lint:disable no-important
+            margin: 0 !important;
+            // sass-lint:enable no-important
+            border-left-width: 0;
+        }
+
+    }
+    .k-tabstrip-right {
+        flex-direction: row-reverse;
+
+        > .k-tabstrip-items {
+            border-left-width: 1px;
+            display: inline-flex;
+            flex-direction: column;
+
+            .k-item {
+                @include border-right-radius();
+                margin-left: -1px;
+            }
+
+            .k-item + .k-item {
+                margin-top: $nav-item-margin;
+            }
+
+            .k-item.k-state-active {
+                border-left-color: transparent;
+            }
+        }
+
+        > .k-content {
+            @include border-left-radius();
+            // sass-lint:disable no-important
+            margin: 0 !important;
+            // sass-lint:enable no-important
+            border-right-width: 0;
+        }
+    }
+
+}

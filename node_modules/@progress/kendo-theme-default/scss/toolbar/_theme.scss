@@ -1,0 +1,169 @@
+@include exports("toolbar/theme") {
+
+    // Theme
+    .k-toolbar {
+        @include appearance( toolbar );
+        background-clip: padding-box;
+
+        .k-ie11 &,
+        .k-edge12 &,
+        .k-edge13 & {
+            background-clip: border-box;
+        }
+
+
+        // Button normal state
+        .k-button {
+            border-color: transparent;
+            color: inherit;
+            background: none;
+            background-clip: padding-box;
+
+            .k-ie11 &,
+            .k-edge12 &,
+            .k-edge13 & {
+                background-clip: border-box;
+            }
+
+            &:not(.k-overflow-anchor) {
+                position: relative;
+            }
+
+            &::before,
+            &::after {
+                display: block;
+                opacity: 0;
+                pointer-events: none;
+                position: absolute;
+                z-index: -1;
+                top: -1px;
+                left: -1px;
+                right: -1px;
+                bottom: -1px;
+            }
+
+            &::before {
+                content: "";
+                background-color: currentColor;
+                -webkit-transition: opacity .2s ease-in-out;
+                transition: opacity .2s ease-in-out;
+            }
+
+            &::after {
+                content: "";
+                border: 2px solid currentColor;
+            }
+        }
+
+
+        // Split button
+        .k-split-button .k-button {
+            @include appearance( button );
+
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+
+
+        // Split button
+        .k-split-button .k-button {
+            @include appearance( button );
+        }
+
+
+        // Button hover state
+        .k-button:hover,
+        .k-button.k-state-hover {
+
+            &::before {
+                opacity: .07;
+                z-index: 1;
+            }
+        }
+        .k-split-button {
+            .k-button:hover,
+            .k-button.k-state-hover {
+                @include appearance( hovered-button );
+            }
+        }
+
+
+        // Button focus state
+        .k-button:focus,
+        .k-button.k-state-focused {
+            box-shadow: none;
+
+            &::after {
+                opacity: .08;
+                z-index: 1;
+            }
+        }
+
+        .k-split-button {
+            .k-button:focus,
+            .k-button.k-state-focused {
+                border-color: $button-pressed-border;
+                box-shadow: inset 0 0 0 1px $button-pressed-border;
+            }
+        }
+        .k-split-button:focus {
+            box-shadow: $button-focused-shadow;
+        }
+
+        // Button pressed state
+        .k-button:active,
+        .k-button.k-state-active {
+
+            &::before,
+            &::after {
+                z-index: 1;
+            }
+
+            &::before {
+                opacity: .07;
+            }
+            &::after {
+                opacity: .13;
+            }
+        }
+        .k-split-button {
+
+            .k-button:active,
+            .k-button.k-state-active {
+                @include appearance( pressed-button );
+                box-shadow: none;
+            }
+        }
+        .k-state-border-down .k-split-button-arrow {
+            box-shadow: inset $button-pressed-shadow;
+        }
+
+        // Button disabled state
+        .k-button.k-state-disabled {
+
+            &::after {
+                opacity: 0;
+            }
+        }
+
+
+        // Button group
+        .k-button-group {}
+        .k-button-group .k-group-start,
+        .k-button-group .k-button:first-child,
+        .k-button-group .k-group-end,
+        .k-button-group .k-button:last-child {
+            @include border-radius( 0 );
+        }
+
+
+        // Overflow anchor
+        .k-overflow-anchor {
+            border-width: 0;
+        }
+
+    }
+
+}

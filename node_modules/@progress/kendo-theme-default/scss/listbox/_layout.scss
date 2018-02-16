@@ -1,0 +1,97 @@
+@include exports( 'listbox/layout' ) {
+    $listbox-margin: $padding-x !default;
+    $listbox-width: 12.4em !default;
+    $listbox-default-height: 200px !default;
+
+    .k-listbox {
+        width: $listbox-width;
+        height: $listbox-default-height;
+        vertical-align: top;
+        background-color: transparent;
+        border-width: 0;
+        display: inline-flex;
+
+        .k-listbox-toolbar ul {
+            display: flex;
+        }
+
+        &.k-listbox-toolbar-left,
+        &.k-listbox-toolbar-right {
+            .k-listbox-toolbar ul {
+                flex-direction: column;
+            }
+
+            .k-listbox-toolbar li + li {
+                margin-top: $listbox-margin;
+            }
+        }
+
+        &.k-listbox-toolbar-left {
+            flex-direction: row;
+
+            .k-listbox-toolbar {
+                margin-right: $listbox-margin;
+            }
+        }
+
+        &.k-listbox-toolbar-right {
+            flex-direction: row-reverse;
+
+            .k-listbox-toolbar {
+                margin-left: $listbox-margin;
+            }
+        }
+
+        &.k-listbox-toolbar-top,
+        &.k-listbox-toolbar-bottom {
+            flex-direction: column;
+
+            .k-listbox-toolbar ul {
+                flex-direction: row;
+            }
+
+            .k-listbox-toolbar li + li {
+                margin-left: $listbox-margin;
+            }
+        }
+
+        &.k-listbox-toolbar-top {
+            .k-listbox-toolbar {
+                margin-bottom: $listbox-margin;
+            }
+        }
+
+        &.k-listbox-toolbar-bottom {
+            .k-listbox-toolbar {
+                margin-top: $listbox-margin;
+            }
+        }
+
+        .k-list-scroller {
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .k-drop-hint {
+            border-top-width: 1px;
+            border-top-style: solid;
+        }
+
+        .k-ghost {
+            opacity: .5;
+        }
+    }
+
+    .k-item {
+        cursor: default;
+    }
+
+    .k-item.k-drag-clue {
+        @include border-radius( 0 );
+        padding: $list-item-padding-y $list-item-padding-x;
+        border-width: 0;
+        font-size: $font-size;
+        line-height: $line-height-em;
+    }
+}
