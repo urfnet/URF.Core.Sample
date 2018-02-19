@@ -34,9 +34,13 @@ namespace Northwind.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                    options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
+            services.AddCors();
+
+            services.AddMvc();
+
+            //services.AddMvc()
+            //    .AddJsonOptions(options =>
+            //        options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
 
             services.AddOData();
 
@@ -53,6 +57,15 @@ namespace Northwind.Api
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowCredentials();
+                builder.Build();
+            });
 
             var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
             var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));        

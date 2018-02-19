@@ -1,23 +1,60 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<kendo-grid 
+  [kendoGridInCellEditing]="createFormGroup" 
+  [editService]="productGridService" 
+  [data]="view | async" 
+  [pageSize]="gridState.take" 
+  [skip]="gridState.skip" 
+  [sort]="gridState.sort" 
+  [pageable]="true" 
+  [sortable]="true" 
+  (dataStateChange)="onStateChange($event)">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
+    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
+    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.cancelChanges();">Cancel Changes</button>
+  </ng-template>
+  <kendo-grid-column field="ProductId" title="Id" [editable]="false"></kendo-grid-column>
+  <kendo-grid-column field="ProductName" title="Product Name"></kendo-grid-column>
+  <kendo-grid-column field="UnitPrice" editor="numeric" title="Price"></kendo-grid-column>
+  <kendo-grid-column field="Discontinued" editor="boolean" title="Discontinued"></kendo-grid-column>
+  <kendo-grid-column field="UnitsInStock" editor="numeric" title="Units In Stock"></kendo-grid-column>
+  <kendo-grid-command-column title="" width="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">Add</button>
+      <button kendoGridCancelCommand>Discard</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
 
-<h1>{{title}}</h1>
-
-<button kendoButton (click)="onButtonClick()" [primary]="true">My Kendo UI Button</button>
+<!-- <div>
+<kendo-grid 
+  [kendoGridInCellEditing]="createFormGroup" 
+  [editService]="productGridService" 
+  [data]="view | async" 
+  [height]="533" 
+  [pageSize]="gridState.take" 
+  [skip]="gridState.skip" 
+  [sort]="gridState.sort" 
+  [pageable]="true" 
+  [sortable]="true" 
+  (dataStateChange)="onStateChange($event)">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
+    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
+    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.cancelChanges();">Cancel Changes</button>
+  </ng-template>
+  <kendo-grid-column field="ProductId" title="Id"></kendo-grid-column>
+  <kendo-grid-column field="ProductName" title="Product Name"></kendo-grid-column>
+  <kendo-grid-column field="UnitPrice" editor="numeric" title="Price"></kendo-grid-column>
+  <kendo-grid-column field="Discontinued" editor="boolean" title="Discontinued"></kendo-grid-column>
+  <kendo-grid-column field="UnitsInStock" editor="numeric" title="Units In Stock"></kendo-grid-column>
+  <kendo-grid-command-column title="command" width="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">Add</button>
+      <button kendoGridCancelCommand>Discard</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+</div> -->
