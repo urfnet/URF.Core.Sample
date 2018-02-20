@@ -34,20 +34,24 @@ namespace Northwind.Api.OData
 
         public async Task<IActionResult> Get([FromODataUri] int key)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var products = await _productService.Queryable().SingleOrDefaultAsync(m => m.ProductId == key);
+            var product = await _productService.FindAsync(key);
 
-            if (products == null) return NotFound();
+            if (product == null)
+                return NotFound();
 
-            return Ok(products);
+            return Ok(product);
         }
 
         public async Task<IActionResult> Put(int key, [FromBody] Products products)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            if (key != products.ProductId) return BadRequest();
+            if (key != products.ProductId)
+                return BadRequest();
 
             products.TrackingState = TrackingState.Modified;
 
@@ -57,17 +61,18 @@ namespace Northwind.Api.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductsExists(key)) return NotFound();
-
+                if (!await _productService.ExistsAsync(key))
+                    return NotFound();
                 throw;
             }
 
             return NoContent();
         }
 
-        public async Task<IActionResult> Post(Products products)
+        public async Task<IActionResult> Post([FromBody] Products products)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             _productService.Insert(products);
             await _unitOfWork.SaveChangesAsync();
@@ -76,17 +81,14 @@ namespace Northwind.Api.OData
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IActionResult> Patch([FromODataUri] int key, Delta<Products> product)
+        public async Task<IActionResult> Patch([FromODataUri] int key, [FromBody] Delta<Products> product)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             var entity = await _productService.FindAsync(key);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             product.Patch(entity);
             _productService.Update(entity);
@@ -97,34 +99,26 @@ namespace Northwind.Api.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductsExists(key))
-                {
+                if (!await _productService.ExistsAsync(key))
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
             return Updated(entity);
         }
-        public async Task<IActionResult> Delete(int key)
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-                
-            var products = await _productService.Queryable().SingleOrDefaultAsync(m => m.ProductId == key);
 
-            if (products == null) return NotFound();
-             
-            _productService.Delete(products);
+        public async Task<IActionResult> Delete([FromODataUri] int key)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _productService.DeleteAsync(key);
+
+            if (!result)
+                return NotFound();
+
             await _unitOfWork.SaveChangesAsync();
 
             return StatusCode((int) HttpStatusCode.NoContent);
-        }
-
-        private bool ProductsExists(int id)
-        {
-            return _productService.Queryable().Any(e => e.ProductId == id);
         }
     }
 }
