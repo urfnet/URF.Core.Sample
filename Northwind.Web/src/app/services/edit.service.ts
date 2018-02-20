@@ -95,7 +95,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     const completed = [];
 
     this.deletedItems.forEach( item => {
-      let uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
+      const uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
       completed.push( this.http.delete( uri ) );
     } );
 
@@ -106,7 +106,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     } );
 
     this.createdItems.forEach( item => {
-      let uri = `${ this.url }`; // e.g. /odata/Orders
+      const uri = `${ this.url }`; // e.g. /odata/Orders
       completed.push( this.http.post( uri, item ) );
     } );
 
@@ -138,8 +138,8 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     return this.http
       .get( `${ this.url }?${ queryStr }` )
       .map( ( response ) => {
-        let data = ( response as any ).value;
-        let total = parseInt( response[ '@odata.count' ], 10 );
+        const data = ( response as any ).value;
+        const total = parseInt( response[ '@odata.count' ], 10 );
         return new DataResult( data, total );
       } );
   }
