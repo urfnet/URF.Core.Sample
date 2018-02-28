@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="URF.Core.EF.Trackable" Version="1.0.0-beta" />
+    <PackageReference Include="URF.Core.EF.Trackable" Version="1.0.0-beta2" />
   </ItemGroup>
 
 </Project>
