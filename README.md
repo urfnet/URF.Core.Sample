@@ -130,7 +130,6 @@ public void ConfigureServices(IServiceCollection services)
 
     var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
     services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
-    services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
     services.AddScoped<DbContext, NorthwindContext>();
     services.AddScoped<IUnitOfWork, UnitOfWork>();
     services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
