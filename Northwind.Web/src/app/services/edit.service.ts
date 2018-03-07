@@ -19,7 +19,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   private state: State;
   private BASE_URL = `${ environment.apiUrl }`;
   private url = `${ this.BASE_URL }${ this.resource }`;
-  private queryString: string = '';
+  private queryString = '';
 
   constructor (
     private http: HttpClient
@@ -95,7 +95,9 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     const completed = [];
 
     this.deletedItems.forEach( item => {
+      // const uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
       const uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
+      
       completed.push( this.http.delete( uri ) );
     } );
 

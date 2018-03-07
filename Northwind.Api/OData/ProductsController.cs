@@ -45,7 +45,7 @@ namespace Northwind.Api.OData
             return Ok(product);
         }
 
-        public async Task<IActionResult> Put(int key, [FromBody] Products products)
+        public async Task<IActionResult> Put([FromODataUri] int key, [FromBody] Products products)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -53,7 +53,7 @@ namespace Northwind.Api.OData
             if (key != products.ProductId)
                 return BadRequest();
 
-            products.TrackingState = TrackingState.Modified;
+            _productService.Update(products);
 
             try
             {
