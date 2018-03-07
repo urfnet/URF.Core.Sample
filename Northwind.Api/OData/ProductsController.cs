@@ -29,9 +29,11 @@ namespace Northwind.Api.OData
             _unitOfWork = unitOfWork;
         }
 
+        // e.g. GET odata/Products?$skip=2&$top=10
         [EnableQuery]
         public IQueryable<Products> Get() => _productService.Queryable();
 
+        // e.g.  GET odata/Products(37)
         public async Task<IActionResult> Get([FromODataUri] int key)
         {
             if (!ModelState.IsValid)
@@ -45,6 +47,7 @@ namespace Northwind.Api.OData
             return Ok(product);
         }
 
+        // e.g. PUT odata/Products(37)
         public async Task<IActionResult> Put([FromODataUri] int key, [FromBody] Products products)
         {
             if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace Northwind.Api.OData
             return NoContent();
         }
 
+        // e.g. PUT odata/Products
         public async Task<IActionResult> Post([FromBody] Products products)
         {
             if (!ModelState.IsValid)
@@ -80,6 +84,7 @@ namespace Northwind.Api.OData
             return Created(products);
         }
 
+        // e.g. PATCH, MERGE odata/Products(37)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IActionResult> Patch([FromODataUri] int key, [FromBody] Delta<Products> product)
         {
@@ -106,6 +111,7 @@ namespace Northwind.Api.OData
             return Updated(entity);
         }
 
+        // e.g. DELETE odata/Products(37)
         public async Task<IActionResult> Delete([FromODataUri] int key)
         {
             if (!ModelState.IsValid)
