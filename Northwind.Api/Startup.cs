@@ -47,9 +47,9 @@ namespace Northwind.Api
             var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
             services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<DbContext, NorthwindContext>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ITrackableRepository<Products>, TrackableRepository<Products>>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
