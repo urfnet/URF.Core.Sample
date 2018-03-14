@@ -6,7 +6,11 @@ import { EditService } from './edit.service';
 export class ProductGridService extends EditService {
 
   constructor (http: HttpClient) {
-    super(http, 'Products', [ 'ProductId' ] );
+    super( http, 'Products', [ 'ProductId' ] );
+    this.state = {
+      sort: [],
+      skip: 0,
+      take: 10
+    };
   }
-
 }

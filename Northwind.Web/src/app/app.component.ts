@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { GridDataResult, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 import { State, process,  } from '@progress/kendo-data-query';
 import { map } from 'rxjs/operators/map';
+import { Product } from './models/product';
 
 @Component( {
   selector: 'app-root',
@@ -12,30 +13,16 @@ import { map } from 'rxjs/operators/map';
   styleUrls: [ './app.component.scss' ]
 } )
 export class AppComponent implements OnInit {
-  public view: Observable<GridDataResult>;
   public formGroup: FormGroup;
-  public gridState: State = {
-    sort: [],
-    skip: 0,
-    take: 10
-  };
   public changes: any = {};
-
   constructor (
     public formBuilder: FormBuilder
     , public productGridService: ProductGridService ) {
     this.createFormGroup = this.createFormGroup.bind( this );
-
   }
 
   public ngOnInit (): void {
-    this.view = this.productGridService;
-    this.productGridService.read(this.gridState, '');
-  }
-
-  public onStateChange ( state: DataStateChangeEvent ) {
-    this.gridState = state;
-    this.productGridService.read(this.gridState, '');
+    this.productGridService.read();
   }
 
   public createFormGroup ( args: any ): FormGroup {
@@ -43,22 +30,12 @@ export class AppComponent implements OnInit {
 
     this.formGroup = this.formBuilder.group( {
       'ProductId': item.ProductId,
-      // 'ProductName': [ args.ProductName, Validators.required ],
-      'ProductName': [ item.ProductName ],
+      'ProductName': [ item.ProductName, Validators.required ],
       'UnitPrice': item.UnitPrice,
-      'UnitsInStock': [ item.UnitsInStock ],
-      // 'UnitsInStock': [ args.UnitsInStock, Validators.compose( [ Validators.required, Validators.pattern( '^[0-9]{1,3}' ) ] ) ],
+      'UnitsInStock': [ item.UnitsInStock, Validators.required ],
       'Discontinued': item.Discontinued
     } );
 
     return this.formGroup;
   }
-}
-
-export class Product {
-  public ProductId: number;
-  public ProductName = '';
-  public Discontinued = false;
-  public UnitsInStock: number;
-  public UnitPrice = 0;
 }

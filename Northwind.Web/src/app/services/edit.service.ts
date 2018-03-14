@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { toODataString, State } from '@progress/kendo-data-query';
 import { environment } from '../../environments/environment';
-import { GridDataResult } from '@progress/kendo-angular-grid';
+import { GridDataResult, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 import 'rxjs/add/operator/zip';
 
 const cloneData = ( data ) => data.map( item => Object.assign( {}, item ) );
@@ -16,9 +16,9 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   private updatedItems: any[] = [];
   private deletedItems: any[] = [];
   private errors: any[];
-  private state: State;
-  private BASE_URL = `${ environment.apiUrl }`;
-  private url = `${ this.BASE_URL }${ this.resource }`;
+  public state: State;
+  private baseUrl = `${ environment.apiUrl }`;
+  private url = `${ this.baseUrl }${ this.resource }`;
   private queryString = '';
 
   constructor (
@@ -27,13 +27,9 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     , private keys: Array<string>
   ) { super( null ); }
 
-  public read ( state: State, queryString = '' ) {
-
-    this.state = state;
-    this.queryString = queryString;
-
-    if ( this.data.length )
-      return super.next( this.data );
+  public read ( queryString = '' ) {
+    if (queryString)
+      this.queryString = queryString;
 
     this.fetch()
       .do( data => { this.data = new DataResult( cloneData( data.value ), data.total ); } )
@@ -95,15 +91,20 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     const completed = [];
 
     this.deletedItems.forEach( item => {
-      // const uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
-      const uri = `${ this.url }?${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( '&' ) }`; // e.g. /odata/Orders?CustomerId=3&OrderId=7
-      
+      let uri = `${ this.url }(${ item[ this.keys[ 0 ] ] })`; // e.g. /odata/Orders(3)
+
+      if ( this.keys.length > 1 )
+        uri = `${ this.url }(${ this.keys.map( key => `${ item[ key ] }` ).join( '&' ) })`; // e.g. /odata/Orders(CustomerId=3,OrderId=7)
+
       completed.push( this.http.delete( uri ) );
     } );
 
     this.updatedItems.forEach( item => {
-      const uri = `${ this.url }(${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( ',' ) })`; // e.g. /odata/Orders(CustomerId=3,OrderId=7)
-      // const uri = `${ this.url }(${ item[this.keys[0]] })`; // e.g. /odata/Orders(3)
+      let uri = `${ this.url }(${ this.keys.map( key => `${ item[ key ] }` ).join( '&' ) })`; // e.g. /odata/Orders(3)
+
+      if ( this.keys.length > 1 )
+        uri = `${ this.url }(${ this.keys.map( key => `${ key }=${ item[ key ] }` ).join( ',' ) })`; // e.g. /odata/Orders(CustomerId=3,OrderId=7)
+
       completed.push( this.http.patch( uri, item ) );
     } );
 
@@ -114,7 +115,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
 
     this.reset();
 
-    Observable.zip( ...completed ).subscribe( () => this.read( this.state, this.queryString ) );
+    Observable.zip( ...completed ).subscribe( () => this.read( this.queryString ) );
   }
 
   public cancelChanges (): void {
@@ -133,6 +134,11 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
     this.deletedItems = [];
     this.updatedItems = [];
     this.createdItems = [];
+  }
+
+  public onStateChange ( state: DataStateChangeEvent ) {
+    this.state = state;
+    this.read(this.queryString);
   }
 
   private fetch (): Observable<DataResult> {
