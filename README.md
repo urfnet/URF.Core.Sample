@@ -5,13 +5,17 @@
 
 #### Live Demo _(Microsoft Azure)_ ####
 
-* Northwind.Web _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
+* **Northwind.Web** _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
   **url**: [http://northwind-web.azurewebsites.net](http://northwind-web.azurewebsites.net/index.html)
 
-* Northwind.Api _(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)_  
+* **Northwind.Api** _(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)_  
   **url**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
+#### Northwind.Api/OData/ProductsController.cs ####
+* Inject IProductsService
+* Inject IUnitOfWork
+* Using Task, Async, Await as defacto strategy for maximum thread optimization
 ```csharp
 public class ProductsController : ODataController
 {
@@ -125,7 +129,11 @@ public class ProductsController : ODataController
     }
 }
 ```
-#### URF sample and usage in ASP.NET Core Web API & OData (*https://goo.gl/ZF6JAH*)
+#### Northwind.Api\Startup.cs  ####
+* URF.Core DI & IoC Configuration/Registration Bindings
+* JSON Serialization & Deserialization Cyclical Configuration
+* ASP.NET Core OData Model Configuration
+* ASP.NET Core OData Route Configuraiton
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
@@ -164,7 +172,9 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     );
 }
 ```
-#### Implementing Domain Logic with URF Service Pattern (*https://goo.gl/n3Bbgc*)
+#### Implementing Domain Logic with URF Service Pattern
+* All Methods are Virtual and Overridable as place holders for domain specific implementation business logic.
+* Recommended and preferred all Web API Controllers initially injected using Service Pattern from the start, Service Pattern acts as a layer for domain logic to reside, a natural side effect of this is eliminating any potential opportunities for leaky domain implemntations ending up in Controllers. The ony concern of the Controller is to serve up HTTP requests.
 ```csharp
 public class CustomerService : Service<Customer>, ICustomerService
 {
@@ -217,8 +227,13 @@ public class CustomerService : Service<Customer>, ICustomerService
 }
 ```
 
-#### Kendo UI Grid Service w/ Asp.Net.Core.OData
-
+#### Kendo UI Grid Service w/ Asp.Net.Core.OData *(OData v4.x)*
+* Reusable Kendo UI Grid Service, this service's concern is to handle most developer use cases reguarding the Grid e.g. Add, Updating, Deleting, and fetching data, as well as the Grid's state management.
+* Change tracking
+  * New Items
+  * Deleted Items
+  * Updated Items
+  * Undo, Rollback and Cancel Changes 
 ```typescript
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
@@ -428,6 +443,7 @@ class DataResult implements GridDataResult {
 </kendo-grid>
 ```
 #### product-grid.service.ts ####
+* Setup or override default Grid State properties e.g. paging, sorting, filtering, etc.
 ```typescript
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -448,6 +464,8 @@ export class ProductGridService extends EditService {
 ```
 
 #### app.component.ts ####
+* Grid implementation & heavy lifting is handled by ProductGridService which extends EditService
+* Component/ViewModel is light-weight and clean, due to resuable EditService for any Grid heavy-lifting
 ```typescript
 @Component( {
   selector: 'app-root',
