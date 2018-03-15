@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/urfnet/URF.Core.svg?branch=master)](https://travis-ci.org/urfnet/URF.Core)
 #### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) ####
 
-#### Live Demo (Azure) ####
+#### Live Demo _(Microsoft Azure)_ ####
 
 * Northwind.Web _(Node, Express)_  
   [http://northwind-web.azurewebsites.net](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName)
