@@ -497,7 +497,7 @@ export class AppComponent implements OnInit {
       'UnitsInStock': [ item.UnitsInStock, Validators.required ],
       'Discontinued': item.Discontinued
     } );
-. All 
+
     return this.formGroup;
   }
 }
