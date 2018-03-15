@@ -10,7 +10,7 @@ import { Product } from './models/product';
 @Component( {
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  styleUrls: [ './app.component.scss', '../../node_modules/@progress/kendo-theme-default/dist/all.css' ]
 } )
 export class AppComponent implements OnInit {
   public formGroup: FormGroup;

@@ -1,5 +1,5 @@
 export class Product {
-  public ProductId: number;
+  public ProductId = 0;
   public ProductName = null;
   public Discontinued = false;
   public UnitsInStock = 0;

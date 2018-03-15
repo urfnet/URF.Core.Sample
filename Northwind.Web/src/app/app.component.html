@@ -1,13 +1,6 @@
-<kendo-grid 
-  [kendoGridInCellEditing]="createFormGroup" 
-  [editService]="productGridService" 
-  [data]="productGridService | async" 
-  [pageSize]="productGridService.state.take" 
-  [skip]="productGridService.state.skip" 
-  [sort]="productGridService.state.sort" 
-  [pageable]="true" 
-  [sortable]="true" 
-  (dataStateChange)="productGridService.onStateChange($event)">
+<h1>URF.Core.Sample</h1>
+<h4>Kendo UI Angular & ASP.NET Core Web API OData</h4>
+<kendo-grid [kendoGridInCellEditing]="createFormGroup" [editService]="productGridService" [data]="productGridService | async" [pageSize]="productGridService.state.take" [skip]="productGridService.state.skip" [sort]="productGridService.state.sort" [pageable]="true" [sortable]="true" (dataStateChange)="productGridService.onStateChange($event)">
   <ng-template kendoGridToolbarTemplate>
     <button kendoGridAddCommand>Add new</button>
     <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
