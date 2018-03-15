@@ -2,7 +2,15 @@
 **_<sup>URF.Core Sample Application | Unit-of-Work & Repository Framework | Official URF Team & [Trackable Entities](https://github.com/TrackableEntities) Team</sup>_**
 
 [![Build Status](https://travis-ci.org/urfnet/URF.Core.svg?branch=master)](https://travis-ci.org/urfnet/URF.Core)
-#### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) | Live Demo: [goo.gl/QpJVgd](https://goo.gl/QpJVgd) ###
+#### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) ####
+
+#### Live Demo (Azure) ####
+
+* Northwind.Web _(Node, Express)_  
+  [http://northwind-web.azurewebsites.net](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName)
+
+* Northwind.Api _(ASP.NET Core Web API & OData)_  
+  [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
 ```csharp
