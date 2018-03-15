@@ -426,12 +426,12 @@ class DataResult implements GridDataResult {
 @Component( {
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss', '../../node_modules/@progress/kendo-theme-default/dist/all.css' ]
+  styleUrls: [ './app.component.scss' ]
 } )
 export class AppComponent implements OnInit {
   public formGroup: FormGroup;
   public changes: any = {};
-  
+
   constructor (
     public formBuilder: FormBuilder
     , public productGridService: ProductGridService ) {
