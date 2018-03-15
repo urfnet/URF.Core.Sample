@@ -173,8 +173,9 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 #### Implementing Domain Logic with URF Service Pattern
-* All Methods are Virtual and Overridable as place holders for domain specific implementation business logic.
-* Recommended and preferred all Web API Controllers initially injected using Service Pattern from the start, Service Pattern acts as a layer for domain logic to reside, a natural side effect of this is eliminating any potential opportunities for leaky domain implemntations ending up in Controllers. The ony concern of the Controller is to serve up HTTP requests.
+* All Methods are Virtual and Overridable as place holders for domain specific implementation business logic. This is the preferred implementation strategy for common developer uses cases e.g. adding any pre or post logic after inserting, updating or deleting.
+* Recommended and preferred all Web API Controllers initially injected using Service Pattern from the start. Service Pattern provides a layer for domain logic to reside as the application evolves over time. 
+* A natural side effect of the Servie Pattern, is eliminating any potential opportunities for leaky domain implemntations ending up in Controllers. Other than edge cases, the ony concern of a Controller is to serve inbound HTTP requests and dispatch to the right Services.
 ```csharp
 public class CustomerService : Service<Customer>, ICustomerService
 {
@@ -233,7 +234,7 @@ public class CustomerService : Service<Customer>, ICustomerService
   * New Items
   * Deleted Items
   * Updated Items
-  * Undo, Rollback and Cancel Changes 
+  * Undo, Rollback, Cancel Changes and restore to previous original state
 ```typescript
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
@@ -496,8 +497,10 @@ export class AppComponent implements OnInit {
       'UnitsInStock': [ item.UnitsInStock, Validators.required ],
       'Discontinued': item.Discontinued
     } );
-
+. All 
     return this.formGroup;
   }
 }
 ```
+
+&copy; 2017 URF.NET All rights reserved.
