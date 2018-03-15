@@ -431,6 +431,7 @@ class DataResult implements GridDataResult {
 export class AppComponent implements OnInit {
   public formGroup: FormGroup;
   public changes: any = {};
+  
   constructor (
     public formBuilder: FormBuilder
     , public productGridService: ProductGridService ) {
