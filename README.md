@@ -7,10 +7,10 @@
 #### Live Demo _(Microsoft Azure)_ ####
 
 * Northwind.Web _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
-  **ng-app**: [http://northwind-web.azurewebsites.net](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName)
+  **url**: [http://northwind-web.azurewebsites.net](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName)
 
 * Northwind.Api _(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)_  
-  **web api**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
+  **url**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
 ```csharp
