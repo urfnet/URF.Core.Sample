@@ -503,4 +503,4 @@ export class AppComponent implements OnInit {
 }
 ```
 
-&copy; 2017 URF.NET All rights reserved.
+&copy; 2018 [URF.NET](https://github.com/urfnet) All rights reserved.
