@@ -1,6 +1,8 @@
 # URF.Core.Sample [![Build Status](https://travis-ci.org/urfnet/URF.Core.svg?branch=master)](https://travis-ci.org/urfnet/URF.Core) #
 **_<sup>URF.Core Sample Application | Unit-of-Work & Repository Framework | Official URF Team & [Trackable Entities](https://github.com/TrackableEntities) Team</sup>_**
+
 #### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) ####
+
 #### Live Demo _(Microsoft Azure)_ ####
 
 * Northwind.Web _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
