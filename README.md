@@ -7,7 +7,7 @@
 #### Live Demo _(Microsoft Azure)_ ####
 
 * Northwind.Web _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
-  **url**: [http://northwind-web.azurewebsites.net](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName)
+  **url**: [http://northwind-web.azurewebsites.net](http://northwind-web.azurewebsites.net)
 
 * Northwind.Api _(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)_  
   **url**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
