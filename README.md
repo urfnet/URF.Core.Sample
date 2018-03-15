@@ -13,9 +13,9 @@
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
 #### Northwind.Api/OData/ProductsController.cs ####
-* Inject IProductsService
-* Inject IUnitOfWork
-* Using Task, Async, Await as defacto strategy for maximum thread optimization
+* Inject IProductsService (Service Pattern)
+* Inject IUnitOfWork (UnitOfWork Pattern)
+* Using Task, Async, Await as defacto strategy for maximum thread optimization and thread avalibility to handle a maximum number of concurrent HTTP requests without blocking
 ```csharp
 public class ProductsController : ODataController
 {
