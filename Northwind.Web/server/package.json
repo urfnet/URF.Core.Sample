@@ -1,0 +1,27 @@
+{
+  "name": "WebMatrixExpressSite",
+  "version": "0.2.0",
+  "author": "The WebMatrix Team <webmatrix@microsoft.com>",
+  "description": "A simple boilerplate for building node applications on Windows Azure (or wherever)",
+  "contributors": [
+    {
+      "name": "Microsoft",
+      "email": "appgal@microsoft.com"
+    }
+  ],
+  "main": "./server.js",
+  "keywords": [
+    "azure",
+    "boilerplate",
+    "express"
+  ],
+  "dependencies": {
+    "express": "~3.1.0"
+  },
+  "noAnalyze": true,
+  "license": "Apache",
+  "engines": {
+    "node": "~0.10.0 || ~4.2.0"
+  },
+  "devDependencies": {}
+}
