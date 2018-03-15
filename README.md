@@ -398,7 +398,7 @@ class DataResult implements GridDataResult {
 }
 ```
 
-#### App.Component.html ####
+#### app.component.html ####
 ```html
 <kendo-grid [kendoGridInCellEditing]="createFormGroup" [editService]="productGridService" [data]="productGridService | async" [pageSize]="productGridService.state.take" [skip]="productGridService.state.skip" [sort]="productGridService.state.sort" [pageable]="true" [sortable]="true" (dataStateChange)="productGridService.onStateChange($event)">
   <ng-template kendoGridToolbarTemplate>
@@ -420,8 +420,27 @@ class DataResult implements GridDataResult {
   </kendo-grid-command-column>
 </kendo-grid>
 ```
+#### product-grid.service.ts ####
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { EditService } from './edit.service';
 
-#### App.Component.ts ####
+@Injectable()
+export class ProductGridService extends EditService {
+
+  constructor (http: HttpClient) {
+    super( http, 'Products', [ 'ProductId' ] );
+    this.state = {
+      sort: [],
+      skip: 0,
+      take: 10
+    };
+  }
+}
+```
+
+#### app.component.ts ####
 ```typescript
 @Component( {
   selector: 'app-root',
