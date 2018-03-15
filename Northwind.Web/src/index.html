@@ -1,13 +1,67 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Northwind.Web</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>URF.Core.Sample</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+      html,
+      body {
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "RobotoRegular", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      app-root {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        min-height: 80px;
+        box-sizing: border-box;
+        padding: 30px;
+      }
+
+      app-root>.k-icon.k-i-loading {
+        font-size: 64px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .event-log {
+        margin: 0;
+        padding: 0;
+        max-height: 100px;
+        overflow-y: auto;
+        list-style-type: none;
+        border: 1px solid rgba(0, 0, 0, .08);
+        background-color: #fff;
+      }
+
+      .event-log li {
+        margin: 0;
+        padding: .3em;
+        line-height: 1.2em;
+        border-bottom: 1px solid rgba(0, 0, 0, .08);
+      }
+
+      .event-log li:last-child {
+        margin-bottom: -1px;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+    <app-root></app-root>
+  </body>
+
 </html>
