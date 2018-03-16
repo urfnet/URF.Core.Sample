@@ -44,3 +44,4 @@ testem.log
 Thumbs.db
 
 /server/package-lock.json
+/server/public/
