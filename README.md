@@ -135,41 +135,66 @@ Northwind.Api\\**Startup.cs**
 * ASP.NET Core OData Model Configuration
 * ASP.NET Core OData Route Configuraiton
 ```csharp
-public void ConfigureServices(IServiceCollection services)
+public class Startup
 {
-    services.AddMvc()
-        .AddJsonOptions(options =>
-            options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
 
-    services.AddOData();
+    public IConfiguration Configuration { get; }
 
-    var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
-    services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
-    services.AddScoped<DbContext, NorthwindContext>();
-    services.AddScoped<IUnitOfWork, UnitOfWork>();
-    services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
-    services.AddScoped<IProductService, ProductService>();
-}
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddCors();
 
-public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-{
-    if (env.IsDevelopment())
-        app.UseDeveloperExceptionPage();
+        services.AddMvc();
 
-    var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
-    var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));        
-    entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
-    entitySetConfiguration.EntityType.Ignore(x => x.Category);
-    entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
-    entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+        //services.AddMvc()
+        //    .AddJsonOptions(options =>
+        //        options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
 
-    app.UseMvc(routeBuilder =>
+        services.AddOData();
+
+        var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
+        services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
+        services.AddScoped<DbContext, NorthwindContext>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
+        services.AddScoped<IProductService, ProductService>();
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
+
+        app.UseCors(builder =>
         {
-            routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(1000).Count();
-            routeBuilder.MapODataServiceRoute("ODataRoute", "odata", oDataConventionModelBuilder.GetEdmModel()); 
-            routeBuilder.EnableDependencyInjection();
-        }
-    );
+            builder.AllowAnyOrigin();
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+            builder.AllowCredentials();
+            builder.Build();
+        });
+
+        var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
+        var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));        
+        entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
+        entitySetConfiguration.EntityType.Ignore(x => x.Category);
+        entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
+        entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+
+        app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(1000).Count();
+                routeBuilder.MapODataServiceRoute("ODataRoute", "odata", oDataConventionModelBuilder.GetEdmModel()); 
+                routeBuilder.EnableDependencyInjection();
+            }
+        );
+    }
 }
 ```
 #### Implementing Domain Logic with URF Service Pattern
