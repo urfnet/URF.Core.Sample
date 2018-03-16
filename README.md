@@ -12,7 +12,7 @@
   **url**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
-#### Northwind.Api/OData/ProductsController.cs ####
+Northwind.Api\OData\\**ProductsController.cs**
 * Inject IProductsService (Service Pattern)
 * Inject IUnitOfWork (UnitOfWork Pattern)
 * Using Task, Async, Await as defacto strategy for maximum thread optimization and thread avalibility to handle a maximum number of concurrent HTTP requests without blocking
@@ -129,7 +129,7 @@ public class ProductsController : ODataController
     }
 }
 ```
-#### Northwind.Api\Startup.cs  ####
+Northwind.Api\\**Startup.cs**
 * URF.Core DI & IoC Configuration/Registration Bindings
 * JSON Serialization & Deserialization Cyclical Configuration
 * ASP.NET Core OData Model Configuration
@@ -229,6 +229,7 @@ public class CustomerService : Service<Customer>, ICustomerService
 ```
 
 #### Kendo UI Grid Service w/ Asp.Net.Core.OData *(OData v4.x)*
+Northwind.Web\src\app\services\\**edit.service.ts**
 * Reusable Kendo UI Grid Service, this service's concern is to handle most developer use cases reguarding the Grid e.g. Add, Updating, Deleting, and fetching data, as well as the Grid's state management.
 * Change tracking
   * New Items
@@ -421,9 +422,18 @@ class DataResult implements GridDataResult {
 }
 ```
 
-#### app.component.html ####
+Northwind.Web\src\app\\**app.component.html**
 ```html
-<kendo-grid [kendoGridInCellEditing]="createFormGroup" [editService]="productGridService" [data]="productGridService | async" [pageSize]="productGridService.state.take" [skip]="productGridService.state.skip" [sort]="productGridService.state.sort" [pageable]="true" [sortable]="true" (dataStateChange)="productGridService.onStateChange($event)">
+<kendo-grid 
+  [kendoGridInCellEditing]="createFormGroup" 
+  [editService]="productGridService" 
+  [data]="productGridService | async" 
+  [pageSize]="productGridService.state.take" 
+  [skip]="productGridService.state.skip" 
+  [sort]="productGridService.state.sort" 
+  [pageable]="true" 
+  [sortable]="true" 
+  (dataStateChange)="productGridService.onStateChange($event)">
   <ng-template kendoGridToolbarTemplate>
     <button kendoGridAddCommand>Add new</button>
     <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
@@ -443,7 +453,7 @@ class DataResult implements GridDataResult {
   </kendo-grid-command-column>
 </kendo-grid>
 ```
-#### product-grid.service.ts ####
+Northwind.Web\src\app\services\\**product-grid.service.ts**
 * Setup or override default Grid State properties e.g. paging, sorting, filtering, etc.
 ```typescript
 import { Injectable } from '@angular/core';
@@ -464,7 +474,7 @@ export class ProductGridService extends EditService {
 }
 ```
 
-#### app.component.ts ####
+Northwind.Web\src\app\\**app.component.ts**
 * Grid implementation & heavy lifting is handled by ProductGridService which extends EditService
 * Component/ViewModel is light-weight and clean, due to resuable EditService for any Grid heavy-lifting
 ```typescript
