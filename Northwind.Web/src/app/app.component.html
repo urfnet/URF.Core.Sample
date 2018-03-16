@@ -1,5 +1,9 @@
 <h1>URF.Core.Sample</h1>
 <h4>Kendo UI Angular, URF.Core, ASP.NET Core Web API OData</h4>
+<strong>Note:</strong> You cannot delete any products where a foreign key constrant exist in between Product.ProductId and OrderDetails.OrderId. 
+To test delete, create an new Product, Save Changes, then refresh grid and delete the newly created Product which will not have a foriegn key to OrderDetails.
+<br/>
+<br/>
 
 <kendo-grid 
   [kendoGridInCellEditing]="createFormGroup" 
