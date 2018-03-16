@@ -151,9 +151,9 @@ public class Startup
 
         services.AddMvc();
 
-        //services.AddMvc()
-        //    .AddJsonOptions(options =>
-        //        options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
+        services.AddMvc()
+           .AddJsonOptions(options =>
+               options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
 
         services.AddOData();
 
