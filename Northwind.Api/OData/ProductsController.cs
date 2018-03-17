@@ -55,7 +55,8 @@ namespace Northwind.Api.OData
 
             if (key != products.ProductId)
                 return BadRequest();
-
+            //Updates all properties if this line is not specified.
+            entity.ModifiedProperties = product.GetChangedPropertyNames().ToList();
             _productService.Update(products);
 
             try
