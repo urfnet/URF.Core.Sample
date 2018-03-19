@@ -20,6 +20,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   private baseUrl = `${ environment.apiUrl }`;
   private url = `${ this.baseUrl }${ this.resource }`;
   private queryString = '';
+  public loading = true;
 
   constructor (
     private http: HttpClient
@@ -28,12 +29,16 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   ) { super( null ); }
 
   public read ( queryString = '' ) {
+
+    this.loading = true;
+
     if (queryString)
       this.queryString = queryString;
 
     this.fetch()
       .do( data => { this.data = new DataResult( cloneData( data.value ), data.total ); } )
       .do( data => this.originalData = new DataResult( cloneData( data.value ), data.total ) )
+      .finally( () => this.loading = false )
       .subscribe( data => { super.next( data ); } );
   }
 

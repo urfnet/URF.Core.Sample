@@ -4,32 +4,40 @@
 To test delete, create an new Product, Save Changes, then refresh grid and delete the newly created Product which will not have a foriegn key to OrderDetails.
 <br/>
 <br/>
+Our service (Northwind.Api) is hyrdrating from Azure App Service which is on a Azure's: Small Service plan/pricing tier: Default1 (Free: 0 Small), 
+which unfortunately is not the most performant, please be patient while Azure's App Service is spinning up from loading, we are currently working on this issue w/ Azure Support Team.
+<br/>
+<br/>
 
-<kendo-grid 
-  [kendoGridInCellEditing]="createFormGroup" 
-  [editService]="productGridService" 
-  [data]="productGridService | async" 
-  [pageSize]="productGridService.state.take" 
-  [skip]="productGridService.state.skip" 
-  [sort]="productGridService.state.sort" 
-  [pageable]="true" 
-  [sortable]="true" 
-  (dataStateChange)="productGridService.onStateChange($event)">
-  <ng-template kendoGridToolbarTemplate>
-    <button kendoGridAddCommand>Add new</button>
-    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
-    <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.cancelChanges();">Cancel Changes</button>
-  </ng-template>
-  <kendo-grid-column field="ProductId" title="Id" [editable]="false"></kendo-grid-column>
-  <kendo-grid-column field="ProductName" title="Product Name"></kendo-grid-column>
-  <kendo-grid-column field="UnitPrice" editor="numeric" title="Price"></kendo-grid-column>
-  <kendo-grid-column field="Discontinued" editor="boolean" title="Discontinued"></kendo-grid-column>
-  <kendo-grid-column field="UnitsInStock" editor="numeric" title="Units In Stock"></kendo-grid-column>
-  <kendo-grid-command-column title="" width="220">
-    <ng-template kendoGridCellTemplate let-isNew="isNew">
-      <button kendoGridRemoveCommand>Remove</button>
-      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">Add</button>
-      <button kendoGridCancelCommand>Discard</button>
+<span *ngIf="productGridService.loading" class="k-icon k-i-loading" style="color: #ff6358"></span>
+
+<div *ngIf="!productGridService.loading">
+  <kendo-grid 
+    [kendoGridInCellEditing]="createFormGroup" 
+    [editService]="productGridService" 
+    [data]="productGridService | async" 
+    [pageSize]="productGridService.state.take" 
+    [skip]="productGridService.state.skip" 
+    [sort]="productGridService.state.sort" 
+    [pageable]="true" 
+    [sortable]="true" 
+    (dataStateChange)="productGridService.onStateChange($event)">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>Add new</button>
+      <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.saveChanges();">Save Changes</button>
+      <button class='k-button' [disabled]="!productGridService.hasChanges()" (click)="productGridService.cancelChanges();">Cancel Changes</button>
     </ng-template>
-  </kendo-grid-command-column>
-</kendo-grid>
+    <kendo-grid-column field="ProductId" title="Id" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column field="ProductName" title="Product Name"></kendo-grid-column>
+    <kendo-grid-column field="UnitPrice" editor="numeric" title="Price"></kendo-grid-column>
+    <kendo-grid-column field="Discontinued" editor="boolean" title="Discontinued"></kendo-grid-column>
+    <kendo-grid-column field="UnitsInStock" editor="numeric" title="Units In Stock"></kendo-grid-column>
+    <kendo-grid-command-column title="" width="220">
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridRemoveCommand>Remove</button>
+        <button kendoGridSaveCommand [disabled]="formGroup?.invalid">Add</button>
+        <button kendoGridCancelCommand>Discard</button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
