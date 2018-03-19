@@ -255,6 +255,7 @@ public class CustomerService : Service<Customer>, ICustomerService
 
 #### Kendo UI Grid Service w/ Asp.Net.Core.OData *(OData v4.x)*
 Northwind.Web\src\app\services\\**edit.service.ts**
+
 * Reusable Kendo UI Grid Service, this service's concern is to handle most developer use cases reguarding the Grid e.g. Add, Updating, Deleting, and fetching data, as well as the Grid's state management.
 * Change tracking
   * New Items
@@ -284,6 +285,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   private baseUrl = `${ environment.apiUrl }`;
   private url = `${ this.baseUrl }${ this.resource }`;
   private queryString = '';
+  public loading = true;
 
   constructor (
     private http: HttpClient
@@ -292,12 +294,16 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
   ) { super( null ); }
 
   public read ( queryString = '' ) {
+
+    this.loading = true;
+
     if (queryString)
       this.queryString = queryString;
 
     this.fetch()
       .do( data => { this.data = new DataResult( cloneData( data.value ), data.total ); } )
       .do( data => this.originalData = new DataResult( cloneData( data.value ), data.total ) )
+      .finally( () => this.loading = false )
       .subscribe( data => { super.next( data ); } );
   }
 
@@ -427,6 +433,7 @@ export abstract class EditService extends BehaviorSubject<GridDataResult> {
 
 }
 
+// https://en.wikipedia.org/wiki/Adapter_pattern
 class DataResult implements GridDataResult {
   data = [];
   total = 0;
