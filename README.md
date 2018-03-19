@@ -538,4 +538,36 @@ export class AppComponent implements OnInit {
 }
 ```
 
+#### URF.Core Sample Angular & Hosting w/ Node.js in Azure *([goo.gl/QRps9g](https://goo.gl/QRps9g))*
+
+```javascript
+var express = require('express')
+  , http = require('http')
+  , path = require('path');
+
+var app = express();
+
+app.configure(function(){
+  app.set('port', process.env.PORT || 3000);
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(path.join(__dirname, 'public')));
+});
+
+app.configure('development', function(){
+  app.use(express.errorHandler());
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(`index.html`, { root: 'public' });
+});
+
+http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
+});
+```
+Please see https://github.com/urfnet/URF.Core.Sample/tree/master/Northwind.Web/server, for directory contents and structure for more details for hosting Angular w/ Node.js in Microsoft Azure.
+
 &copy; 2018 [URF.NET](https://github.com/urfnet) All rights reserved.
