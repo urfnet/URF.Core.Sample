@@ -8,11 +8,25 @@
 
 ### Live Demo _(Microsoft Azure)_ ###
 
-* **Northwind.Web** _(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))_  
-  **url**: [http://northwind-web.azurewebsites.net](http://northwind-web.azurewebsites.net/index.html)
+* **Northwind.Web** <sup>_(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))</sup>_  
+  [http://northwind-web.azurewebsites.net](http://northwind-web.azurewebsites.net/index.html)
 
-* **Northwind.Api** _(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)_  
-  **url**: [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
+* **Northwind.Api** <sup>_(ASP.NET Core Web API, Entity Framework Core, OData, .NET Standard)</sup>_  
+  [http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName desc](http://northwind-api.azurewebsites.net/odata/Products?$skip=10&$top=10&$orderby=ProductName%20desc)
+
+#### Running & Debugging URF.Core.Sample Locally ####
+* Clone this repo: https://github.com/urfnet/URF.Core.Sample.git 
+* Northwind.Api *<sup>(ASP.NET Core Web API)</sup>*
+  * Restore *([northwind.bacpac](https://github.com/urfnet/URF.Core.Sample/tree/master/Northwind.Data/Sql))* Northwind SQL Database
+  * Install [Visual Studio 2017 Preview](https://www.visualstudio.com/vs/preview/)
+  * Install .NET Core SDK *(URF.Core.Sample is targeting [.NET Core v2.3.1 Preview](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview1))*, **after** Visual Studio 2017 install
+  * Open Northwind.sln in Visual Studio 2017 Preview
+  * Set Northwind.Api as Startup Project for the Solution
+  * F5 to launch Northwind.Api in debug mode in Visual Studio
+* Northwind.Web *<sup>(Angular)</sup>*
+  * `cd` into Northwind.Web directory
+  * run `npm install` *<sup>(install npm dependencies)</sup>*
+  * run `ng serve` *<sup>(pre-requisite: [@angular/cli](https://cli.angular.io/))</sup>*
 
 #### URF sample and usage in ASP.NET Core Web API & OData *([goo.gl/URdYa1](https://goo.gl/URdYa1))*
 Northwind.Api\OData\\**ProductsController.cs**
