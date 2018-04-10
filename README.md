@@ -22,6 +22,7 @@
   * Install .NET Core SDK *(URF.Core.Sample is targeting [.NET Core v2.3.1 Preview](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview1))*, **after** Visual Studio 2017 install
   * Open Northwind.sln Solution in Visual Studio 2017 Preview
   * Set Northwind.Api as Startup Project for the Solution
+  * Verify SQL connection string in [appsettings.json](https://github.com/urfnet/URF.Core.Sample/blob/master/Northwind.Api/appsettings.json#L16) is correct respective to local environment
   * F5 to launch Northwind.Api in debug mode in Visual Studio
   * Verify http://localhost:2790/odata/Products?$top=10 in Chrome
 * Northwind.Web *<sup>(Angular)</sup>*
