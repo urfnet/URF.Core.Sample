@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Northwind.Api/bin/Debug/netcoreapp2.0/Northwind.Api.dll",
+            "program": "${workspaceFolder}/Northwind.Api/bin/Debug/netcoreapp2.1/Northwind.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Northwind.Api",
             "stopAtEntry": false,
