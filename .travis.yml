@@ -1,5 +1,5 @@
 language: csharp
 mono: none
-dotnet: 2.1.300-preview2-008530-linux-x64
+dotnet: 2.1.300-preview2-008530
 script:
  - dotnet restore
