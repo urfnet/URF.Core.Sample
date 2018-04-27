@@ -5,10 +5,10 @@ using URF.Core.Abstractions.Services;
 
 namespace Northwind.Service
 {
-  // Sample to extend ProductService, scoped to only ProductService vs. application wide
+  // Example: extending IService<TEntity> and/or ITrackableRepository<TEntity>, scope: ICustomerService
   public interface ICustomerService : IService<Customers>
   {
-    // Example, adding synchronous Single method
+    // Example: adding synchronous Single method, scope: ICustomerService
     Customers Single(Expression<Func<Customers, bool>> predicate);
   }
 }

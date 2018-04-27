@@ -53,10 +53,9 @@ namespace Northwind.Api
       services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
       services.AddScoped<IProductService, ProductService>();
 
-      // Sample: extending IRepository<TEntity> and/or ITrackableRepository<TEntity>, scope: application-wide
-      services.AddScoped<IRepositoryX<Customers>, RepositoryX<Customers>>();
-      // Sample: extending IService<TEntity>, scope: CustomerService
-      services.AddScoped<ICustomerService, CustomerService>();
+      // Example: extending IRepository<TEntity>, scope: application-wide and IService<TEntity>, scope: ICustomerService
+      services.AddScoped<IRepositoryX<Customers>, RepositoryX<Customers>>();   
+      services.AddScoped<ICustomerService, CustomerService>();  
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,11 +74,17 @@ namespace Northwind.Api
       });
 
       var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
-      var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));
-      entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
-      entitySetConfiguration.EntityType.Ignore(x => x.Category);
-      entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
-      entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+      
+      var productsEntitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));
+      productsEntitySetConfiguration.EntityType.HasKey(x => x.ProductId);
+      productsEntitySetConfiguration.EntityType.Ignore(x => x.Category);
+      productsEntitySetConfiguration.EntityType.Ignore(x => x.Supplier);
+      productsEntitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+
+      var customersEntitySetConfiguration = oDataConventionModelBuilder.EntitySet<Customers>(nameof(Customers));
+      customersEntitySetConfiguration.EntityType.HasKey(x => x.CustomerId);
+      customersEntitySetConfiguration.EntityType.Ignore(x => x.CustomerCustomerDemo);
+      customersEntitySetConfiguration.EntityType.Ignore(x => x.Orders);
 
       app.UseMvc(routeBuilder =>
           {
