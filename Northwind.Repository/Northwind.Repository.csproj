@@ -5,4 +5,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="URF.Core.EF.Trackable" Version="1.0.0-rc2" />
+  </ItemGroup>
+
 </Project>
