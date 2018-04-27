@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TrackableEntities.Common.Core;
 using URF.Core.EF.Trackable;
 
-// Sample to extend Repository<TEntity>, scopded application wide
+// Example, extending IRepository<TEntity> and/or ITrackableRepository<TEntity>
 namespace Northwind.Repository
 {
   public class RepositoryX<TEntity> : TrackableRepository<TEntity>, IRepositoryX<TEntity> where TEntity : class, ITrackable

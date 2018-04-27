@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Northwind.Data.Models;
+using Northwind.Repository;
 using Northwind.Service;
 using Urf.Core.Abstractions;
 using URF.Core.Abstractions.Trackable;
@@ -22,65 +23,71 @@ using URF.Core.EF.Trackable;
 
 namespace Northwind.Api
 {
-    public class Startup
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors();
-
-            services.AddMvc();
-
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                    options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
-
-            services.AddOData();
-
-            var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
-            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped<DbContext, NorthwindContext>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
-            services.AddScoped<IProductService, ProductService>();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyHeader();
-                builder.AllowAnyMethod();
-                builder.AllowCredentials();
-                builder.Build();
-            });
-
-            var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
-            var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));        
-            entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
-            entitySetConfiguration.EntityType.Ignore(x => x.Category);
-            entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
-            entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
-
-            app.UseMvc(routeBuilder =>
-                {
-                    routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(1000).Count();
-                    routeBuilder.MapODataServiceRoute("ODataRoute", "odata", oDataConventionModelBuilder.GetEdmModel()); 
-                    routeBuilder.EnableDependencyInjection();
-                }
-            );
-        }
+      Configuration = configuration;
     }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddCors();
+
+      services.AddMvc();
+
+      services.AddMvc()
+          .AddJsonOptions(options =>
+              options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All);
+
+      services.AddOData();
+
+      var connectionString = Configuration.GetConnectionString(nameof(NorthwindContext));
+      services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connectionString));
+      services.AddScoped<DbContext, NorthwindContext>();
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+      services.AddScoped<ITrackableRepository<Products>, TrackableRepository<Products>>();
+      services.AddScoped<IProductService, ProductService>();
+
+      // Sample: extending IRepository<TEntity> and/or ITrackableRepository<TEntity>, scope: application-wide
+      services.AddScoped<IRepositoryX<Customers>, RepositoryX<Customers>>();
+      // Sample: extending IService<TEntity>, scope: CustomerService
+      services.AddScoped<ICustomerService, CustomerService>();
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+      if (env.IsDevelopment())
+        app.UseDeveloperExceptionPage();
+
+      app.UseCors(builder =>
+      {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+        builder.AllowCredentials();
+        builder.Build();
+      });
+
+      var oDataConventionModelBuilder = new ODataConventionModelBuilder(app.ApplicationServices);
+      var entitySetConfiguration = oDataConventionModelBuilder.EntitySet<Products>(nameof(Products));
+      entitySetConfiguration.EntityType.HasKey(x => x.ProductId);
+      entitySetConfiguration.EntityType.Ignore(x => x.Category);
+      entitySetConfiguration.EntityType.Ignore(x => x.Supplier);
+      entitySetConfiguration.EntityType.Ignore(x => x.OrderDetails);
+
+      app.UseMvc(routeBuilder =>
+          {
+            routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(1000).Count();
+            routeBuilder.MapODataServiceRoute("ODataRoute", "odata", oDataConventionModelBuilder.GetEdmModel());
+            routeBuilder.EnableDependencyInjection();
+          }
+      );
+    }
+  }
 }

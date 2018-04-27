@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj" />
     <ProjectReference Include="..\Northwind.Entity\Northwind.Entity.csproj" />
     <ProjectReference Include="..\Northwind.Service\Northwind.Service.csproj" />
+    <ProjectReference Include="..\Northwind.Repository\Northwind.Repository.csproj" />
   </ItemGroup>
 
 </Project>
