@@ -12,7 +12,7 @@ namespace Northwind.Service
 {
   public class CustomerService : Service<Customers>, ICustomerService
   {
-    public CustomerService(ITrackableRepository<Customers> repository) : base(repository)
+    public CustomerService(IRepositoryX<Customers> repository) : base(repository)
     {
     }
 
