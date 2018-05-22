@@ -1,18 +1,12 @@
-﻿#region
-
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Northwind.Data.Models;
 using Northwind.Service;
-using TrackableEntities.Common.Core;
-using Urf.Core.Abstractions;
-
-#endregion
+using URF.Core.Abstractions;
 
 namespace Northwind.Api.OData
 {
