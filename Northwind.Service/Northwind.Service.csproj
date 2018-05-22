@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="URF.Core.EF.Trackable" Version="1.0.0-rc2" />
-    <PackageReference Include="URF.Core.Services" Version="1.0.0-rc2" />
+    <PackageReference Include="URF.Core.EF.Trackable" Version="1.0.0" />
+    <PackageReference Include="URF.Core.Services" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
