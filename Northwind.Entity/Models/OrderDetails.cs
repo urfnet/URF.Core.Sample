@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using URF.Core.EF.Trackable;
 
 namespace Northwind.Data.Models
 {
-    public partial class OrderDetails
+    public class OrderDetails : Entity
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
