@@ -1,2 +1,3 @@
 nuget.exe
 .vs/
+/Northwind.Web/build/config.gypi
