@@ -6,7 +6,7 @@
 
 #### Docs: [comming soon](https://goo.gl/6zh9zp) | Subscribe URF Updates: [@lelong37](http://twitter.com/lelong37) | NuGet: [goo.gl/WEn7Jm](https://goo.gl/WEn7Jm) ####
 
-### Live Demo _(Microsoft Azure)_ ###
+### Live Demo _(Microsoft Azure)_  (Demo Site is down due to heavy traffic and Azure costs.) ###
 
 * **Northwind.Web** <sup>_(Express, Angular, Node.js, [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/))</sup>_  
   [http://northwind-web.azurewebsites.net](http://northwind-web.azurewebsites.net/index.html)
